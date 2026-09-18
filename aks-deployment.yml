@@ -9,7 +9,7 @@ spec:
     - name: acr-secret
   containers:
     - name: aspnetapp-container
-      image: acr101.azurecr.io/sept101image:158
+      image: acr101.azurecr.io/sept101image:160
       imagePullPolicy: Always
       resources: 
         requests:
