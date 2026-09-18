@@ -37,3 +37,8 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'aks-deployment.yml'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
