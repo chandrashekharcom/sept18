@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: chandrashekharcomsept 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chandrashekharcomsept
+  template:
+    metadata:
+      labels:
+        app: chandrashekharcomsept 
+    spec:
+      containers:
+        - name: chandrashekharcomsept 
+          image: acr101.azurecr.io/chandrashekharcomsept
+          ports:
+          - containerPort: 80
