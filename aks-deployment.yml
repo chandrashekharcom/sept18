@@ -1,25 +1,34 @@
-apiVersion: v1
-kind: development
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: aspnetapp-pod
+  name: aspnetapp-deployment
   labels:
-    name: aspnetapp
+    app: aspnetapp
 spec:
-  imagePullSecrets:
-    - name: acr-secret
-  containers:
-    - name: aspnetapp-container
-      image: acr101.azurecr.io/sept101image:160
-      imagePullPolicy: Always
-      resources: 
-        requests:
-          memory: "256Mi"
-          cpu: "250m"
-        limits:
-          memory: "512Mi"
-          cpu: "500m"
-      ports:
-        - containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspnetapp
+  template:
+    metadata:
+      labels:
+        app: aspnetapp
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+        - name: aspnetapp-container
+          image: acr101.azurecr.io/sept101image:163
+          imagePullPolicy: Always
+          resources: 
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -28,8 +37,8 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    name: aspnetapp # Ensure this matches spec.template.metadata.labels in your deployment
+    app: aspnetapp
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080 # Try 8080 if the app listens on the default non-root .NET port   
+      targetPort: 8080
